@@ -6,7 +6,6 @@ import Overlay from './Overlay';
 
 import { generator } from "../function/sudokuGenerator";
 import { solver } from "../function/sudokuSolver";
-import { checker } from "../function/sudokuChecker";
 
 function SudokuPuzzle() {
     const [grid, setGrid] = useState([]);
@@ -23,38 +22,31 @@ function SudokuPuzzle() {
     };
 
     const handleSolve = () => {
-        // Clear user inputs and solve the puzzle
-        const clearedGrid = grid.map(row => row.map(cell => typeof cell === 'number' ? cell : ''));
-        const solvedPuzzle = solver.solve(clearedGrid);
+        const solvedPuzzle = solver.solve(grid);
         if (solvedPuzzle) {
-            setGrid(solvedPuzzle);
+            const updatedGrid = grid.map((row, i) =>
+                row.map((cell, j) => cell === '' ? solvedPuzzle[i][j].toString() : cell)
+            );
+            setGrid(updatedGrid);
         } else {
-            console.error('No solution exists for the current Sudoku puzzle.');
-        }
-    };
-
-    const handleCheck = () => {
-        const result = checker.check(grid);
-        if (result.valid) {
-            setOverlay({ show: true, message: 'Congratulations! Puzzle solved correctly.', options: [
-                    { label: 'OK', action: () => setOverlay({ show: false, message: '', options: [] }) },
-                    { label: 'New Puzzle', action: handleGenerate }
-                ]});
-        } else {
-            setOverlay({ show: true, message: 'Some entries are incorrect.', options: [
-                    { label: 'Try Again', action: () => setOverlay({ show: false, message: '', options: [] }) }
-                ]});
+            setOverlay({ show: true, message: 'Could not find a solution.', options: [
+                    { label: 'Okay :(', action: () => setOverlay({ show: false, message: '', options: [] }) }
+            ]});
         }
     };
 
     const handleClear = () => {
-        // Create a new grid based on the current one, only clearing cells that were not part of the original puzzle
-        const clearedGrid = grid.map((row, rowIndex) =>
-            row.map((cell, colIndex) =>
-                typeof cell === 'number' ? cell : '' // Keep original numbers, clear others
-            )
-        );
-        setGrid(clearedGrid);
+        setOverlay({ show: true, message: 'Are you sure you want to clear the puzzle?', options: [
+                { label: 'Yes', action: () => {
+                        const clearedGrid = grid.map((row, _) =>
+                            row.map((_, __) => '')
+                        );
+                        setGrid(clearedGrid);
+                        setOverlay({ show: false, message: '', options: [] });
+                    }
+                },
+                { label: 'No', action: () => setOverlay({ show: false, message: '', options: [] }) }
+        ]});
     };
 
     return (
@@ -65,7 +57,6 @@ function SudokuPuzzle() {
             <div className="controls">
                 <button onClick={handleGenerate}>New Puzzle</button>
                 <button onClick={handleClear}>Clear</button>
-                <button onClick={handleCheck}>Check</button>
                 <button onClick={handleSolve}>Solve</button>
             </div>
 

@@ -7,8 +7,9 @@
     -moz-appearance: textfield;
     appearance: textfield;
 
-    font-size: 16px;
-    font-weight: normal;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
 }
 
 .cell::-webkit-outer-spin-button,
@@ -19,21 +20,4 @@
 
 input[type=number] {
     -moz-appearance:textfield;
-}
-
-.cell.not-editable {
-    background-color: #e5e2d4;
-    color: black;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.cell.correct {
-    background-color: #d4edda;
-    color: #155724;
-}
-
-.cell.error {
-    background-color: #f8d7da;
-    color: #721c24;
 }
