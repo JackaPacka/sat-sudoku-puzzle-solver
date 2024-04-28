@@ -1,6 +1,6 @@
 # SAT Sudoku Puzzle Solver
 
-This project uses a SAT solver to solve Sudoku puzzles.
+[TRY IT OUT HERE](https://main.d25iv5qn72qo2e.amplifyapp.com/)
 
 **Created by Jack Randolph.**
 
