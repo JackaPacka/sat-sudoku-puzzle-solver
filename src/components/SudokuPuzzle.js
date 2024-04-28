@@ -23,7 +23,9 @@ function SudokuPuzzle() {
     };
 
     const handleSolve = () => {
-        const solvedPuzzle = solver.solve(grid);
+        // Clear user inputs and solve the puzzle
+        const clearedGrid = grid.map(row => row.map(cell => typeof cell === 'number' ? cell : ''));
+        const solvedPuzzle = solver.solve(clearedGrid);
         if (solvedPuzzle) {
             setGrid(solvedPuzzle);
         } else {
@@ -46,7 +48,12 @@ function SudokuPuzzle() {
     };
 
     const handleClear = () => {
-        const clearedGrid = grid.map(row => row.map(cell => (typeof cell === 'number') ? '' : cell));
+        // Create a new grid based on the current one, only clearing cells that were not part of the original puzzle
+        const clearedGrid = grid.map((row, rowIndex) =>
+            row.map((cell, colIndex) =>
+                typeof cell === 'number' ? cell : '' // Keep original numbers, clear others
+            )
+        );
         setGrid(clearedGrid);
     };
 
@@ -56,7 +63,7 @@ function SudokuPuzzle() {
             <SudokuGrid grid={grid} setGrid={setGrid} />
 
             <div className="controls">
-                <button onClick={handleGenerate}>Generate</button>
+                <button onClick={handleGenerate}>New Puzzle</button>
                 <button onClick={handleClear}>Clear</button>
                 <button onClick={handleCheck}>Check</button>
                 <button onClick={handleSolve}>Solve</button>

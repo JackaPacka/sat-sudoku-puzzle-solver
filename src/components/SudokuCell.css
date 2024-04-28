@@ -2,11 +2,13 @@
     width: 100%;
     padding: 4px;
     text-align: center;
-    font-size: 1rem;
     border: none;
     box-sizing: border-box;
     -moz-appearance: textfield;
     appearance: textfield;
+
+    font-size: 16px;
+    font-weight: normal;
 }
 
 .cell::-webkit-outer-spin-button,
@@ -20,7 +22,7 @@ input[type=number] {
 }
 
 .cell.not-editable {
-    background-color: white;
+    background-color: #e5e2d4;
     color: black;
     font-weight: bold;
     font-size: 20px;

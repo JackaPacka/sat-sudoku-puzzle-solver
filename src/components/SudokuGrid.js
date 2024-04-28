@@ -5,7 +5,7 @@ import SudokuCell from './SudokuCell';
 
 function SudokuGrid({ grid, setGrid }) {
     const handleCellValueChange = (rowIndex, colIndex, value) => {
-        const newGrid = grid.slice();
+        const newGrid = [...grid];
         newGrid[rowIndex][colIndex] = value;
         setGrid(newGrid);
     };
@@ -19,6 +19,7 @@ function SudokuGrid({ grid, setGrid }) {
                             key={`${rowIndex}-${colIndex}`}
                             value={cell}
                             onChange={(value) => handleCellValueChange(rowIndex, colIndex, value)}
+                            disabled={typeof cell === 'number'} // disable input if it's an initial number
                         />
                     ))}
                 </div>
