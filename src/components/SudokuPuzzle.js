@@ -1,38 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SudokuPuzzle.css';
 
 import SudokuGrid from './SudokuGrid';
 import Overlay from './Overlay';
 
-import {game} from "../function/sudokuGame";
-import {generator} from "../function/sudokuGenerator";
-import {solver} from "../function/sudokuSolver";
-import {checker} from "../function/sudokuChecker";
+import { generator } from "../function/sudokuGenerator";
+import { solver } from "../function/sudokuSolver";
+import { checker } from "../function/sudokuChecker";
 
 function SudokuPuzzle() {
-    const [overlay] = useState({ show: false, message: '', options: [] });
+    const [grid, setGrid] = useState([]);
+    const [overlay, setOverlay] = useState({ show: false, message: '', options: [] });
+
+    useEffect(() => {
+        handleGenerate();
+    }, []);
 
     const handleGenerate = () => {
-        console.log("TODO: handleGenerate");
+        const newPuzzle = generator.generate();
+        setGrid(newPuzzle);
+        setOverlay({ show: false, message: '', options: [] });
     };
 
     const handleSolve = () => {
-        console.log("TODO: handleSolve");
+        const solvedPuzzle = solver.solve(grid);
+        if (solvedPuzzle) {
+            setGrid(solvedPuzzle);
+        } else {
+            console.error('No solution exists for the current Sudoku puzzle.');
+        }
     };
 
     const handleCheck = () => {
-        console.log("TODO: handleCheck");
+        const result = checker.check(grid);
+        if (result.valid) {
+            setOverlay({ show: true, message: 'Congratulations! Puzzle solved correctly.', options: [
+                    { label: 'OK', action: () => setOverlay({ show: false, message: '', options: [] }) },
+                    { label: 'New Puzzle', action: handleGenerate }
+                ]});
+        } else {
+            setOverlay({ show: true, message: 'Some entries are incorrect.', options: [
+                    { label: 'Try Again', action: () => setOverlay({ show: false, message: '', options: [] }) }
+                ]});
+        }
     };
 
     const handleClear = () => {
-        console.log("TODO: handleClear");
+        const clearedGrid = grid.map(row => row.map(cell => (typeof cell === 'number') ? '' : cell));
+        setGrid(clearedGrid);
     };
 
     return (
         <div className="SudokuPuzzle">
             <h1>Sudoku Puzzle</h1>
-
-            <SudokuGrid />
+            <SudokuGrid grid={grid} setGrid={setGrid} />
 
             <div className="controls">
                 <button onClick={handleGenerate}>Generate</button>

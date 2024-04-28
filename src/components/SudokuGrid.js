@@ -3,13 +3,23 @@ import './SudokuGrid.css';
 
 import SudokuCell from './SudokuCell';
 
-function SudokuGrid() {
+function SudokuGrid({ grid, setGrid }) {
+    const handleCellValueChange = (rowIndex, colIndex, value) => {
+        const newGrid = grid.slice();
+        newGrid[rowIndex][colIndex] = value;
+        setGrid(newGrid);
+    };
+
     return (
         <div className="sudoku-grid">
-            {Array.from({ length: 9 }, (_, row) => (
-                <div key={row} className="row">
-                    {Array.from({ length: 9 }, (_, col) => (
-                        <SudokuCell key={col} />
+            {grid.map((row, rowIndex) => (
+                <div key={rowIndex} className="row">
+                    {row.map((cell, colIndex) => (
+                        <SudokuCell
+                            key={`${rowIndex}-${colIndex}`}
+                            value={cell}
+                            onChange={(value) => handleCellValueChange(rowIndex, colIndex, value)}
+                        />
                     ))}
                 </div>
             ))}

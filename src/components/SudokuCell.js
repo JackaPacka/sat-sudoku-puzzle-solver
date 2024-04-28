@@ -1,13 +1,15 @@
 import React from 'react';
 import './SudokuCell.css';
 
-function SudokuCell({ state, onChange, value = ''}) {
+function SudokuCell({ value, onChange }) {
     return (
         <input
-            className={`cell ${value !== '' ? 'not-editable' : state === 1 ? 'error' : state === 2 ? 'correct' : ''}`}
+            className={`cell ${value !== '' ? 'not-editable' : ''}`}
             type="text"
             maxLength="1"
-            disabled={!!value}
+            value={value}
+            onChange={(e) => onChange(e.target.value.replace(/[^1-9]/g, ''))}
+            disabled={value !== ''}
         />
     );
 }
