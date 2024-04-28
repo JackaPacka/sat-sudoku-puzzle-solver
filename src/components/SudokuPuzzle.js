@@ -3,11 +3,11 @@ import './SudokuPuzzle.css';
 
 import SudokuGrid from './SudokuGrid';
 import Overlay from './Overlay';
-/*
-import {sudokuGenerator} from "../function/sudokuGenerator";
-import {sudokuSolver} from "../function/sudokuSolver";
-import {checkSudoku} from "../function/sudokuChecker";
-*/
+
+import {game} from "../function/sudokuGame";
+import {generator} from "../function/sudokuGenerator";
+import {solver} from "../function/sudokuSolver";
+import {checker} from "../function/sudokuChecker";
 
 function SudokuPuzzle() {
     const [overlay] = useState({ show: false, message: '', options: [] });
