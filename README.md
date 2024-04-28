@@ -16,3 +16,9 @@ My source code was written in JavaScript and uses the "logic-solver" library to 
 2. Select the **Solve** button to see the solution to the puzzle.
 
 You can also select the **Clear** button to clear the puzzle and input your own puzzle.
+
+## What I Used
+
+1. React
+2. logic-solver
+3. AWS Amplify (To host the website)
