@@ -1,0 +1,50 @@
+.sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    grid-gap: 2px;
+    margin: 20px auto;
+    border: 6px solid black;
+    width: 425px;
+    height: 425px;
+    background: black;
+}
+
+.row {
+    display: contents;
+}
+
+.row:nth-child(3n) .cell:not(:last-child),
+.cell:nth-child(3n):not(:last-child) {
+    position: relative;
+}
+
+.row:nth-child(3n) .cell:not(:last-child)::after,
+.cell:nth-child(3n):not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 2px;
+    height: 100%;
+    background: black;
+}
+
+.row:nth-child(3n) .cell:not(:last-child)::after {
+    height: 2px;
+    width: 100%;
+    right: 0;
+    bottom: -1px;
+}
+
+.cell {
+    background-color: white;
+}
+
+.cell:nth-child(3), .cell:nth-child(6) {
+    border-right: 2px solid black;
+}
+
+.row:nth-child(3) .cell, .row:nth-child(6) .cell {
+    border-bottom: 2px solid black;
+}
